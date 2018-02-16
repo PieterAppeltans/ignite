@@ -194,6 +194,12 @@ public class GridCacheUtils {
     /** */
     public static final String TX_MSG_RECOVERY_LOG_CATEGORY = TX_MSG_LOG_CATEGORY + ".recovery";
 
+    /** */
+    public static final String  BACKUPS_PARAM = "backups";
+
+    /** */
+    public static final String  WRITE_SYNCHRONIZATION_MODE_PARAM = "writeSynchronizationMode";
+
     /** Default mask name. */
     private static final String DEFAULT_MASK_NAME = "<default>";
 
@@ -1158,7 +1164,7 @@ public class GridCacheUtils {
     public static <K, V> void inTx(IgniteInternalCache<K, V> cache, TransactionConcurrency concurrency,
         TransactionIsolation isolation, IgniteInClosureX<IgniteInternalCache<K ,V>> clo) throws IgniteCheckedException {
 
-        try (GridNearTxLocal tx = cache.txStartEx(concurrency, isolation);) {
+        try (GridNearTxLocal tx = cache.txStartEx(concurrency, isolation)) {
             clo.applyx(cache);
 
             tx.commit();
